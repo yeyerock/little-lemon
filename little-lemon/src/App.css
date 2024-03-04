@@ -123,6 +123,7 @@ a {
 #navbar .menu_items .description {
   margin-bottom: 10px;
   margin-left: 10%;
+  color: var(--black);
 }
 
 #navbar .menu_items .description:hover {
@@ -405,6 +406,26 @@ a {
   height: 2rem;
   font-size: 1.2rem;
   border-radius: 0.4rem;
+}
+
+/* Confirmation */
+
+#confirmation {
+  width: 60%;
+  height: 60%;
+  background: var(--green);
+  margin: 0 auto;
+  padding: 10rem;
+  border-radius: 1.5rem;
+  text-align: center;
+}
+
+#confirmation .text {
+  color: var(--white);
+}
+
+#confirmation .cta {
+  margin: 1rem 0;
 }
 
 /* Footer */

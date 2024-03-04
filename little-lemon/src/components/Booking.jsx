@@ -31,6 +31,9 @@ export const Booking = () => {
   // Initialize availableTimes state using useReducer
   const [availableTimes, availableTimesDispatch] = useReducer(availableTimesReducer, [], initializeTimes);
 
+  // Define initializedTime here or get it from wherever it is initialized
+  const initializedTime = "18:00";
+
   // Function to handle reservation submission
   const handleReservation = (event) => {
     event.preventDefault();
@@ -43,7 +46,8 @@ export const Booking = () => {
       <Header/>
       <BookingForm 
         handleReservation={handleReservation} 
-        availableTimesDispatch={availableTimesDispatch} 
+        availableTimesDispatch={availableTimesDispatch}
+        initializedTime={initializedTime} // Pass initializedTime as prop
       />
       <Footer/>
     </>
