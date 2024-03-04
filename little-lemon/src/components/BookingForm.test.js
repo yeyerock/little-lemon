@@ -1,44 +1,38 @@
-import { render, screen } from "@testing-library/react";
-import BookingForm, { initializeTimes, updateTimes } from './BookingForm'; // Asegúrate de exportar las funciones desde BookingForm
+import React from 'react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect'; // Para tener acceso a los métodos toBeInTheDocument, etc.
+import { BookingForm } from './BookingForm';
 
-describe('initializeTimes function', () => {
-  test('returns the correct expected value', () => {
-    // Ejecutar la función initializeTimes
-    const times = initializeTimes();
-    
-    // Verificar que devuelve el valor esperado
-    expect(times).toEqual([
-      "17:00",
-      "18:00",
-      "19:00",
-      "20:00",
-      "21:00",
-      "22:00"
-    ]);
+describe('BookingForm', () => {
+  test('renders all form fields', () => {
+    const { getByLabelText } = render(<BookingForm />);
+
+    expect(getByLabelText('Choose date')).toBeInTheDocument();
+    expect(getByLabelText('Choose time')).toBeInTheDocument();
+    expect(getByLabelText('Number of guests')).toBeInTheDocument();
+    expect(getByLabelText('Occasion')).toBeInTheDocument();
   });
-});
 
-describe('updateTimes function', () => {
-  test('returns the same value as provided in the state', () => {
-    // Definir un estado de ejemplo
-    const currentState = [
-      "10:00",
-      "11:00",
-      "12:00"
-    ];
+  test('submits the form with valid data', async () => {
+    const handleReservation = jest.fn();
+    const { getByLabelText, getByText } = render(
+      <BookingForm handleReservation={handleReservation} />
+    );
 
-    // Ejecutar la función updateTimes con el estado de ejemplo
-    const updatedTimes = updateTimes(currentState);
-    
-    // Verificar que devuelve el mismo valor proporcionado en el estado
-    expect(updatedTimes).toEqual(currentState);
-  });
-});
+    fireEvent.change(getByLabelText('Choose date'), { target: { value: '2022-12-31' } });
+    fireEvent.change(getByLabelText('Choose time'), { target: { value: '18:00' } });
+    fireEvent.change(getByLabelText('Number of guests'), { target: { value: '4' } });
+    fireEvent.change(getByLabelText('Occasion'), { target: { value: 'Birthday' } });
 
-describe('BookingForm component', () => {
-  test('Renders the BookingForm heading', () => {
-    render(<BookingForm />);
-    const headingElement = screen.getByText("Book Now");
-    expect(headingElement).toBeInTheDocument();
+    fireEvent.click(getByText('Make Your reservation'));
+
+    await waitFor(() =>
+      expect(handleReservation).toHaveBeenCalledWith({
+        date: '2022-12-31',
+        time: '18:00',
+        guests: '4',
+        occasion: 'Birthday'
+      })
+    );
   });
 });
