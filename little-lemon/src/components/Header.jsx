@@ -17,12 +17,12 @@ export const Header = () => {
             <div className="menu_container" onClick={toggleMenu}>
                 <div className={`hamburger ${isOpen ? 'open' : ''}`}></div>
                 <ul className={`menu_items ${isOpen ? 'open' : ''}`}>
-                    <li className="description"><Link to="/">Home</Link></li>
-                    <li className="description"><Link to="/">About</Link></li>
-                    <li className="description"><Link to="/menu">Menu</Link></li>
-                    <li className="description"><Link to="/booking">Reservations</Link></li>
-                    <li className="description"><Link to="/">Order Online</Link></li>
-                    <li className="description"><Link to="/">Login</Link></li>
+                    <li><Link className="description" to="/">Home</Link></li>
+                    <li><Link className="description" to="/">About</Link></li>
+                    <li><Link className="description" to="/menu">Menu</Link></li>
+                    <li><Link className="description" to="/booking">Reservations</Link></li>
+                    <li><Link className="description" to="/">Order Online</Link></li>
+                    <li><Link className="description" to="/">Login</Link></li>
                 </ul>
             </div>
         </nav>
