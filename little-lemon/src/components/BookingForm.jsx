@@ -40,52 +40,55 @@ export const BookingForm = ({ handleReservation, availableTimesDispatch }) => {
 
   return (
     <>
-      <h1>Book Now</h1>
-      <form
-        onSubmit={handleReservation}
-        style={{ display: "grid", maxWidth: "200px", gap: "20px" }}
-      >
-        <label htmlFor="res-date">Choose date</label>
-        <input
-          type="date"
-          id="res-date"
-          onChange={handleDateChange}
-          aria-label="Select date for reservation"
-          aria-describedby="date-description"
-        />
-        <label htmlFor="res-time">Choose time</label>
-        <select
-          id="res-time"
-          onChange={(e) =>
-            dispatch({ type: "SELECT_TIME", payload: e.target.value })
-          }
-          aria-label="Select time for reservation"
+      <section className="section_container_column">
+        <h1 className="title">Book Now</h1>
+        <form
+          onSubmit={handleReservation}
+          style={{ display: "grid", maxWidth: "200px", gap: "20px" }}
         >
-          {/* Render options dynamically from availableTimes state */}
-          {availableTimes.map((timeOption, index) => (
-            <option key={index}>{timeOption}</option>
-          ))}
-        </select>
-        <label htmlFor="guests">Number of guests</label>
-        <input
-          type="number"
-          placeholder="1"
-          min="1"
-          max="10"
-          id="guests"
-          aria-label="Number of guests"
-        />
-        <label htmlFor="occasion">Occasion</label>
-        <select id="occasion">
-          <option value="Birthday">Birthday</option>
-          <option value="Anniversary">Anniversary</option>
-        </select>
-        <input
-          type="submit"
-          value="Make Your reservation"
-          aria-label="Submit reservation"
-        />
-      </form>
+          <label className="description" htmlFor="res-date">Choose date</label>
+          <input
+            type="date"
+            id="res-date"
+            onChange={handleDateChange}
+            aria-label="Select date for reservation"
+            aria-describedby="date-description"
+          />
+          <label className="description" htmlFor="res-time">Choose time</label>
+          <select
+            id="res-time"
+            onChange={(e) =>
+              dispatch({ type: "SELECT_TIME", payload: e.target.value })
+            }
+            aria-label="Select time for reservation"
+          >
+            {/* Render options dynamically from availableTimes state */}
+            {availableTimes.map((timeOption, index) => (
+              <option key={index}>{timeOption}</option>
+            ))}
+          </select>
+          <label className="description" htmlFor="guests">Number of guests</label>
+          <input
+            type="number"
+            placeholder="1"
+            min="1"
+            max="10"
+            id="guests"
+            aria-label="Number of guests"
+          />
+          <label className="description" htmlFor="occasion">Occasion</label>
+          <select className="description" id="occasion">
+            <option  value="Birthday">Birthday</option>
+            <option  value="Anniversary">Anniversary</option>
+          </select>
+          <input
+            className="cta description"
+            type="submit"
+            value="Make Your reservation"
+            aria-label="Submit reservation"
+          />
+        </form>
+      </section>
     </>
   );
 };

@@ -5,12 +5,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { App } from './App.jsx'
-import './index.css'
+import { Booking } from './components/Booking.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
+  },
+  {
+    path: "/booking",
+    element: <Booking/>,
   },
 ]);
 
