@@ -1,94 +1,94 @@
-import React, { useReducer } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-// Reducer function to manage state updates
-const availableTimesReducer = (state, action) => {
-  switch (action.type) {
-    case "INITIALIZE_TIMES":
-      return initializeTimes();
-    case "UPDATE_TIMES":
-      return updateTimes(action.payload);
-    default:
-      return state;
-  }
-};
+const BookingFormSchema = Yup.object().shape({
+  date: Yup.date().required("Date is required"),
+  time: Yup.string().required("Time is required"),
+  guests: Yup.number().required("Number of guests is required").min(1, "Minimum guests is 1").max(10, "Maximum guests is 10"),
+  occasion: Yup.string().required("Occasion is required"),
+});
 
-// Function to initialize available times
-const initializeTimes = () => {
-  return ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
-};
-
-// Function to update available times based on selected date
-const updateTimes = (selectedDate) => {
-  // For now, return the same available times regardless of the date
-  return initializeTimes();
-};
-
-export const BookingForm = ({ handleReservation, availableTimesDispatch }) => {
-  // Initialize availableTimes state using useReducer
-  const [availableTimes, dispatch] = useReducer(
-    availableTimesReducer,
-    [],
-    initializeTimes
-  );
-
-  // Handle date change and update available times
-  const handleDateChange = (event) => {
-    const selectedDate = event.target.value;
-    const updatedTimes = updateTimes(selectedDate);
-    availableTimesDispatch({ type: "UPDATE_TIMES", payload: updatedTimes });
+export const BookingForm = ({ handleReservation }) => {
+  const initialValues = {
+    date: "",
+    time: "",
+    guests: 1,
+    occasion: "",
   };
 
   return (
-    <>
-      <section className="section_container_column">
+    <section id="booking">
+      <div className="container">
         <h1 className="title">Book Now</h1>
-        <form
-          onSubmit={handleReservation}
-          style={{ display: "grid", maxWidth: "200px", gap: "20px" }}
-        >
-          <label className="description" htmlFor="res-date">Choose date</label>
-          <input
-            type="date"
-            id="res-date"
-            onChange={handleDateChange}
-            aria-label="Select date for reservation"
-            aria-describedby="date-description"
-          />
-          <label className="description" htmlFor="res-time">Choose time</label>
-          <select
-            id="res-time"
-            onChange={(e) =>
-              dispatch({ type: "SELECT_TIME", payload: e.target.value })
-            }
-            aria-label="Select time for reservation"
+        <div className="form_container">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={BookingFormSchema}
+            onSubmit={(values, { setSubmitting }) => {
+              handleReservation(values);
+              setSubmitting(false);
+            }}
           >
-            {/* Render options dynamically from availableTimes state */}
-            {availableTimes.map((timeOption, index) => (
-              <option key={index}>{timeOption}</option>
-            ))}
-          </select>
-          <label className="description" htmlFor="guests">Number of guests</label>
-          <input
-            type="number"
-            placeholder="1"
-            min="1"
-            max="10"
-            id="guests"
-            aria-label="Number of guests"
-          />
-          <label className="description" htmlFor="occasion">Occasion</label>
-          <select className="description" id="occasion">
-            <option  value="Birthday">Birthday</option>
-            <option  value="Anniversary">Anniversary</option>
-          </select>
-          <input
-            className="cta description"
-            type="submit"
-            value="Make Your reservation"
-            aria-label="Submit reservation"
-          />
-        </form>
-      </section>
-    </>
+            {({ isSubmitting }) => (
+              <Form>
+                <label className="section_title" htmlFor="date">Choose date</label>
+                <Field
+                  type="date"
+                  id="date"
+                  name="date"
+                  className="input_field"
+                  aria-label="Select date for reservation"
+                />
+                <ErrorMessage name="date" component="div" className="error_message" />
+                <label className="section_title" htmlFor="time">Choose time</label>
+                <Field
+                  as="select"
+                  id="time"
+                  name="time"
+                  className="input_field"
+                  aria-label="Select time for reservation"
+                >
+                  <option value="">Select time</option>
+                  {/* Renderizar las opciones de tiempo aquí */}
+                </Field>
+                <ErrorMessage name="time" component="div" className="error_message" />
+                <label className="section_title" htmlFor="guests">Number of guests</label>
+                <Field
+                  type="number"
+                  id="guests"
+                  name="guests"
+                  className="input_field"
+                  placeholder="1"
+                  min="1"
+                  max="10"
+                  aria-label="Number of guests"
+                />
+                <ErrorMessage name="guests" component="div" className="error_message" />
+                <label className="section_title" htmlFor="occasion">Occasion</label>
+                <Field
+                  as="select"
+                  id="occasion"
+                  name="occasion"
+                  className="input_field"
+                >
+                  <option value="">Select occasion</option>
+                  <option value="Birthday">Birthday</option>
+                  <option value="Anniversary">Anniversary</option>
+                </Field>
+                <ErrorMessage name="occasion" component="div" className="error_message" />
+                <button
+                  className="cta description"
+                  type="submit"
+                  disabled={isSubmitting}
+                  aria-label="Submit reservation"
+                >
+                  {isSubmitting ? "Submitting..." : "Make Your reservation"}
+                </button>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+    </section>
   );
 };

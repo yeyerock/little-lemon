@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { App } from './App.jsx'
 import { Booking } from './components/Booking.jsx';
+import { ConfirmedBooking } from './components/ConfirmedBooking.jsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/booking",
     element: <Booking/>,
+  },
+  {
+    path: "/bookingconfirmation",
+    element: <ConfirmedBooking/>,
   },
 ]);
 

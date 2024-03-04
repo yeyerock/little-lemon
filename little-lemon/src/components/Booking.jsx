@@ -1,5 +1,7 @@
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 import { BookingForm } from "./BookingForm";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 // Reducer function to manage state updates for available times
 const availableTimesReducer = (state, action) => {
@@ -37,12 +39,13 @@ export const Booking = () => {
   };
 
   return (
-    <div>
-      {/* Render the BookingForm component with availableTimes state and dispatch function */}
+    <>
+      <Header/>
       <BookingForm 
         handleReservation={handleReservation} 
         availableTimesDispatch={availableTimesDispatch} 
       />
-    </div>
+      <Footer/>
+    </>
   );
 };
