@@ -1,16 +1,17 @@
 import React, { useReducer } from "react";
-import { Booking } from './components/Booking';
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
-import './App.css'
+import { Specials } from "./components/Specials";
 import { Footer } from "./components/Footer";
+import './App.css'
+
 
 export const App = () => {
     return (
         <div>
             <Header />
             <Hero />
-            <Booking />
+            <Specials />
             <Footer />
         </div>
     );
