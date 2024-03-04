@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import  Logo  from '../assets/Logo.svg';
 
 export const Header = () => {
@@ -16,12 +17,12 @@ export const Header = () => {
             <div className="menu_container" onClick={toggleMenu}>
                 <div className={`hamburger ${isOpen ? 'open' : ''}`}></div>
                 <ul className={`menu_items ${isOpen ? 'open' : ''}`}>
-                    <li className="description">Home</li>
-                    <li className="description">About</li>
-                    <li className="description">Menu</li>
-                    <li className="description">Reservations</li>
-                    <li className="description">Order Online</li>
-                    <li className="description">Login</li>
+                    <li className="description"><Link to="/">Home</Link></li>
+                    <li className="description"><Link to="/">About</Link></li>
+                    <li className="description"><Link to="/menu">Menu</Link></li>
+                    <li className="description"><Link to="/booking">Reservations</Link></li>
+                    <li className="description"><Link to="/">Order Online</Link></li>
+                    <li className="description"><Link to="/">Login</Link></li>
                 </ul>
             </div>
         </nav>
