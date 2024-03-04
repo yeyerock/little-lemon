@@ -18,7 +18,7 @@ export const BookingForm = ({ handleReservation, initializedTime }) => {
 
   const initialValues = {
     date: "",
-    time: initializedTime || "", // Utiliza initializedTime como valor inicial si está definido
+    time: initializedTime || "",
     guests: 1,
     occasion: "",
   };
@@ -34,11 +34,11 @@ export const BookingForm = ({ handleReservation, initializedTime }) => {
               validationSchema={BookingFormSchema}
               onSubmit={(values, { setSubmitting }) => {
                 handleReservation(values);
-                setIsModalOpen(true); // Abrir el modal inmediatamente al enviar el formulario
-                setTimeout(() => { // Cerrar el modal después de un tiempo
+                setIsModalOpen(true); 
+                setTimeout(() => { 
                   setIsModalOpen(false);
                   setSubmitting(false);
-                }, 3000); // Puedes ajustar el tiempo según tus necesidades
+                }, 3000); 
               }}
             >
               {({ isSubmitting }) => (
